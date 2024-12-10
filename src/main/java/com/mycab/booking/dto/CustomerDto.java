@@ -1,4 +1,4 @@
-package com.mycab.realTimeCabBooking.dto;
+package com.mycab.booking.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,11 @@ import lombok.Setter;
 @Setter
 public class CustomerDto
 {
-    long id;
+    long customerId;
     String name;
     String emailId;
+    String gender;
+    int age;
     long mobileNo;
+    long createdTime;
 }
