@@ -1,7 +1,6 @@
 package com.mycab.booking.controller;
 
 import com.mycab.booking.dto.CustomerDto;
-import com.mycab.booking.exception.InvalidInputException;
 import com.mycab.booking.service.CustomerServiceImpl;
 
 import org.slf4j.Logger;
@@ -12,9 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController
@@ -39,7 +41,7 @@ public class CustomerController
     {
         logger.info("get customer ...");
 
-        CustomerDto getCustomer = customerService.getCustomer(id);
+        CustomerDto getCustomer = customerService.getCustomers(id);
 
         return ResponseEntity.ok(getCustomer);
     }
@@ -49,9 +51,32 @@ public class CustomerController
     {
         logger.info("get all customer");
 
-        List<CustomerDto> resultList = customerService.getCustomer(start,limit);
+        List<CustomerDto> resultList = customerService.getCustomers(start,limit);
 
         return new ResponseEntity<>(resultList,HttpStatus.OK);
+    }
+
+    @PutMapping("/updateCustomer/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("id") long cus_id,@RequestBody CustomerDto customerDto)
+    {
+        logger.info("updating customer ");
+
+        CustomerDto updatedCustomer = customerService.updateCustomer(cus_id,customerDto);
+
+        return new ResponseEntity<>(updatedCustomer,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String,Object>> deleteCustomer(@PathVariable("id") long cusId)
+    {
+        Map<String,Object> res = new HashMap<>();
+
+        customerService.deleteCustomer(cusId);
+
+       res.put("Status","SUCCESS");
+       res.put("id",cusId);
+
+       return  new ResponseEntity<>(res,HttpStatus.OK);
     }
 
 }

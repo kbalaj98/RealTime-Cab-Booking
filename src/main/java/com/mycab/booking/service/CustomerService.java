@@ -8,9 +8,13 @@ public interface CustomerService
 {
     CustomerDto addCustomer(CustomerDto customerDto);
 
-    CustomerDto getCustomer(long cusId);
+    CustomerDto getCustomers(long cusId);
 
-    List<CustomerDto> getCustomer(int start,int limit);
+    List<CustomerDto> getCustomers(int start, int limit);
 
     boolean isMailIdPresent(String mailId);
+
+    CustomerDto updateCustomer(long cusId, CustomerDto customerDto);
+
+    void deleteCustomer(long cusId);
 }

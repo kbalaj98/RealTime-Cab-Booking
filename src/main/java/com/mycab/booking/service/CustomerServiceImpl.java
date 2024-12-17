@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -34,13 +35,12 @@ public class CustomerServiceImpl implements CustomerService
 
         Customer customer = CustomerMapper.getCustomer(customerDto);
 
-        return CustomerMapper.getCustomerDto(customerRepo.save(customer));
+        return saveCustomer(customer);
     }
 
 
-
     @Override
-    public CustomerDto getCustomer(long cus_id)
+    public CustomerDto getCustomers(long cus_id)
     {
         Customer customerRes = customerRepo.findById(cus_id).orElseThrow(()->
                 new ResourceNotFoundException("Invalid customer id "+cus_id)
@@ -51,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService
     }
 
     @Override
-    public List<CustomerDto> getCustomer(int start, int limit)
+    public List<CustomerDto> getCustomers(int start, int limit)
     {
         if(start<0)
         {
@@ -72,4 +72,39 @@ public class CustomerServiceImpl implements CustomerService
     {
         return customerRepo.findByemailId(mailId).isPresent();
     }
+
+    @Override
+    public CustomerDto updateCustomer(long customer_id, CustomerDto updatedCustomerDto)
+    {
+        Optional<Customer> customerRes = customerRepo.findById(customer_id);
+
+        if(!customerRes.isPresent())
+        {
+            throw  new ResourceNotFoundException("Customer id not found"+customer_id);
+        }
+
+        Customer customer = customerRes.get();
+        customer.setName(updatedCustomerDto.getName());
+        customer.setEmailId(updatedCustomerDto.getEmailId());
+        customer.setAge(updatedCustomerDto.getAge());
+        customer.setMobileNo(updatedCustomerDto.getMobileNo());
+
+        return saveCustomer(customer);
+    }
+
+    @Override
+    public void deleteCustomer(long cusId)
+    {
+        customerRepo.findById(cusId).orElseThrow(
+                () -> new ResourceNotFoundException("Customer id not found "+cusId)
+        );
+
+        customerRepo.deleteById(cusId);
+    }
+
+    public CustomerDto saveCustomer(Customer customer)
+    {
+        return CustomerMapper.getCustomerDto(customerRepo.save(customer));
+    }
+
 }
