@@ -1,9 +1,13 @@
 import React,{useEffect, useState} from 'react'
-import { addCustomer } from '../services/CustomerService'
+import { addCustomer,getCustomer,updateCustomer } from '../services/CustomerService'
 
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,useParams,useLocation} from 'react-router-dom'
 
-export const AddCustomerComponent = () => {
+export const CustomerComponent = () => {
+
+    const {id} = useParams();
+
+   // const {state} = useLocation();
 
     const navigate = useNavigate()
 
@@ -13,6 +17,9 @@ export const AddCustomerComponent = () => {
     const [age,setAge] = useState('')
     const [mobileNo,setMobileNo] = useState('')
 
+
+
+
     const[errors,setError] = useState({
         name:'',
         email:'',
@@ -21,6 +28,37 @@ export const AddCustomerComponent = () => {
         mobileNo:''
     })
 
+
+
+
+    useEffect(()=>{
+        setCustomerIdValues()
+        //console.log("select customer",state);
+    },[id])
+   
+
+    //update customer value fetching
+     function setCustomerIdValues()
+     {
+        if(id)
+        {
+            getCustomer(id).then((response)=>{
+
+                let data = response.data;
+    
+                setName(data.name)
+                setAge(data.age)
+                setEmail(data.emailId)
+                setGender(data.gender)
+                setMobileNo(data.mobileNo)
+    
+            }).catch((e)=>
+            {
+                console.log(e);
+            })
+        }
+     }
+
     function saveCustomer(e)
     {
         //prevent alter option
@@ -28,23 +66,46 @@ export const AddCustomerComponent = () => {
 
         if(validation())
         {
-            addCustomer(name,email,gender,age,mobileNo).then((response)=>{
+            if(id)
+            {
+                updateCustomer(id,name,email,gender,age,mobileNo).then((response)=>{
+                    alertCustomerResponseAndNavigate(response)
+
+                }).catch((err)=>{
+                    console.error(err);
+                })
+            }
+            else
+            {
+                addCustomer(name,email,gender,age,mobileNo).then((response)=>{
             
-                const customer = response.data
-    
-                if(response.status===201)
-                {
-                    alert(`User added successfully customer id=${customer.customerId}`)
-                    navigate('/')
-                }
-                //console.log(customer)
-    
-               // document.getElementById('add_cus_res').innerHTML = JSON.stringify(customer)
-    
-            }).catch((err)=>{
-                console.error(err);
-            })
+                    alertCustomerResponseAndNavigate(response)
+                    //console.log(customer)
+        
+                   // document.getElementById('add_cus_res').innerHTML = JSON.stringify(customer)
+        
+                }).catch((err)=>{
+                    console.error(err);
+                })
+            }
+            
         }
+    }
+
+    function alertCustomerResponseAndNavigate(response)
+    {
+        const customer = response.data
+        
+                    if(response.status===201)
+                    {
+                        alert(`Customer added successfully customer id=${customer.customerId}`)
+                    }
+                    else
+                    {
+                        alert(`Customer updated successfully customer id=${customer.customerId}`)
+                    }
+
+                    navigate('/')
     }
 
     function validation()
@@ -83,7 +144,7 @@ export const AddCustomerComponent = () => {
             error_copy.email = 'Email required'
         }
 
-        if(age.trim())
+        if(age!=0)
         {
             error_copy.age = ''
         }
@@ -94,7 +155,7 @@ export const AddCustomerComponent = () => {
         }
 
             
-        if(mobileNo.trim())
+        if(mobileNo!=0)
         {
             error_copy.mobileNo = ''
         }
@@ -135,15 +196,27 @@ export const AddCustomerComponent = () => {
         setGender(e.target.value)
     }
 
+    function pageTitle()
+    {
+        if(id)
+        {
+            return <h2 className='text-center'>Update Customer</h2>
+        }
+        else
+        {
+            return <h2 className='text-center'>Add Customer</h2>
+        }
+    }
+
   return (
 
    
     <div>
          <br></br>
-        <form method='POST' className='container'>
+        <form method='POST' className='container' onLoad={setCustomerIdValues}>
             <div className='card col-md-6 offset-md-3 offset-md-3'>
                 <div className='card-body'>
-                    <h2 className='text-center'>Add Customer</h2>
+                    {pageTitle()}
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
@@ -168,11 +241,11 @@ export const AddCustomerComponent = () => {
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Gender</label>
                         <div class="col-sm-10">
-                            <input type='radio' id="cus_male"  class="form-check-input" name="gender" value='Male' onClick={handleGender} />
+                            <input type='radio' id="cus_male"  class="form-check-input" name="gender" value='Male' onChange={handleGender} />
                             <label>Male</label>
-                            <input type='radio' id="cus_female" class="form-check-input" name="gender" value='Female' onClick={handleGender}/>
+                            <input type='radio' id="cus_female" class="form-check-input" name="gender" value='Female' onChange={handleGender}/>
                             <label>Female</label>
-                            <input type='radio' id="cus_others" class="form-check-input" name="gender" value='Others' onClick={handleGender}/>
+                            <input type='radio' id="cus_others" class="form-check-input" name="gender" value='Others' onChange={handleGender}/>
                             <label>Others</label>
 
                             {errors.age && <div className='invalid-feedback'>{errors.age}</div>}
@@ -219,4 +292,4 @@ export const AddCustomerComponent = () => {
   )
 }
 
-export default AddCustomerComponent
+export default CustomerComponent

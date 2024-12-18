@@ -6,7 +6,7 @@ import ListAllCustomerComponent from './components/ListAllCustomerComponent'
 import HeaderComponent from './components/HeaderComponent'
 
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import AddCustomerComponent from './components/AddCustomerComponent'
+import CustomerComponent from './components/CustomerComponent'
 
 function App() {
 
@@ -17,12 +17,14 @@ function App() {
         <Routes>
         {/* http://localhost:3000/ */}
           <Route path='/' element = {<ListAllCustomerComponent/>}></Route>
+          <Route path='/:page' element = {<ListAllCustomerComponent/>}></Route>
 
-          {/* http://localhost:3000/AllCustomers */}
-          <Route path='/allCustomers' element ={<ListAllCustomerComponent/>}></Route>
 
           {/* http://localhost:3000/addCustomer */}
-          <Route path='/addCustomer' element={<AddCustomerComponent/>}></Route>
+          <Route path='/addCustomer' element={<CustomerComponent/>}></Route>
+
+          {/* http://localhost:3000/updateCustomer/1 */}
+          <Route path='/updateCustomer/:id' element={<CustomerComponent/>}></Route>
 
         </Routes>
         {/* <ListAllCustomerComponent/> */}
