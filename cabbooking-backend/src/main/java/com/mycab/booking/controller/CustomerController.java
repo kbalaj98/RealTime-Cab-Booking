@@ -3,6 +3,7 @@ package com.mycab.booking.controller;
 import com.mycab.booking.dto.CustomerDto;
 import com.mycab.booking.service.CustomerServiceImpl;
 
+import datadog.trace.api.Trace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,11 @@ public class CustomerController
     }
 
     @GetMapping("/getAllCustomers")
-    public ResponseEntity<List<CustomerDto>> getAllCustomer(@Param("start") int start, @Param("limit") int limit)
+    public ResponseEntity<List<CustomerDto>> getAllCustomer(@Param("page") int page, @Param("limit") int limit)
     {
         logger.info("get all customer");
 
-        List<CustomerDto> resultList = customerService.getCustomers(start,limit);
+        List<CustomerDto> resultList = customerService.getCustomers(page,limit);
 
         return new ResponseEntity<>(resultList,HttpStatus.OK);
     }

@@ -4,22 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.redis.core.RedisHash;
 
-import java.io.Serializable;
-
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@RedisHash("CustomerDto")
-public class CustomerDto implements Serializable
+public class DriverDto
 {
-    long customerId;
+    long driver_id;
     String name;
     String emailId;
     String gender;
     int age;
     long mobileNo;
-    long createdTime;
 }

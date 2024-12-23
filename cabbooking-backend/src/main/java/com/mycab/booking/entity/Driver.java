@@ -1,9 +1,6 @@
 package com.mycab.booking.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +15,8 @@ import lombok.Setter;
 public class Driver
 {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true,nullable = false)
     long driver_id;
 
     @Column(nullable = false)
@@ -33,9 +31,4 @@ public class Driver
 
     @Column(nullable = false)
     long mobileNo;
-
-    String carModel;
-
-    @Column(nullable = false)
-    int seatingCapacity;
 }

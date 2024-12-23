@@ -3,12 +3,12 @@ import { data } from 'react-router-dom';
 
 const REST_API_BASE_URL='http://localhost:6060/api/customer'
 
-export const listAllCustomer = (start,limit)=>{
+export const listAllCustomer = (page,limit)=>{
 
     let url = REST_API_BASE_URL+'/getAllCustomers'
     return  axios.get(url,{
         params : {
-            "start":start,
+            "page":page,
             "limit":limit
         }
     });
