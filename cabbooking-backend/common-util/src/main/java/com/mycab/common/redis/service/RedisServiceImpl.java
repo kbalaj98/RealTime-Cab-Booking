@@ -1,6 +1,6 @@
-package com.mycab.booking.service;
+package com.mycab.common.redis.service;
 
-import com.mycab.booking.config.RedisConfig;
+import com.mycab.common.redis.config.RedisConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

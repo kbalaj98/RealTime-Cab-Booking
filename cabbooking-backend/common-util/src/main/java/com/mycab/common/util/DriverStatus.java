@@ -1,4 +1,4 @@
-package com.mycab.booking.config;
+package com.mycab.common.util;
 
 public enum DriverStatus
 {

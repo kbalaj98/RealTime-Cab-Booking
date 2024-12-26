@@ -1,6 +1,6 @@
-package com.mycab.booking.mapper;
+package com.mycab.common.mapper;
 
-import com.mycab.booking.config.VehicleType;
+import com.mycab.common.util.VehicleType;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.util.stream.Stream;
@@ -22,7 +22,7 @@ public class VehicleTypeEnumConverter implements AttributeConverter<VehicleType,
     public VehicleType convertToEntityAttribute(Integer integer)
     {
         return Stream.of(VehicleType.values())
-                .filter((vechile)-> vechile.getValue()==integer)
+                .filter((vehile)-> vehile.getValue()==integer)
                 .findFirst()
                 .orElseThrow(IllegalAccessError::new);
 

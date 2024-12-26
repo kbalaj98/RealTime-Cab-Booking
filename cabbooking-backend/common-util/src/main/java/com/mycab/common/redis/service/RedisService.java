@@ -1,4 +1,4 @@
-package com.mycab.booking.service;
+package com.mycab.common.redis.service;
 
 
 import java.time.Duration;

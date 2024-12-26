@@ -1,13 +1,13 @@
-package com.mycab.booking.config;
+package com.mycab.common.util;
 
-public enum VechicleType
+public enum VehicleType
 {
     BIKE(1),
     AUTO(2),
     CAR(3);
 
     int type;
-    VechicleType(int type)
+     VehicleType(int type)
     {
         this.type = type;
     }

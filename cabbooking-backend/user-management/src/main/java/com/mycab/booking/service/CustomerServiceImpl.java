@@ -7,6 +7,7 @@ import com.mycab.booking.exception.ResourceAlreadyExistsException;
 import com.mycab.booking.exception.ResourceNotFoundException;
 import com.mycab.booking.mapper.CustomerMapper;
 import com.mycab.booking.repository.CustomerRepo;
+import com.mycab.common.redis.service.RedisService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

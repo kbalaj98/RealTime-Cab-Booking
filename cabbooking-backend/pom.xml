@@ -11,7 +11,8 @@
 	<groupId>com.mycab</groupId>
 	<artifactId>RealTimeCabBooking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>RealTimeCabBooking</name>
+    <packaging>pom</packaging>
+    <name>RealTimeCabBooking</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -20,7 +21,11 @@
 	<developers>
 		<developer/>
 	</developers>
-	<scm>
+    <modules>
+        <module>user-management</module>
+		<module>common-util</module>
+	</modules>
+    <scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>

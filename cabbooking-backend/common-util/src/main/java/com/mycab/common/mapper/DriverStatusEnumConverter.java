@@ -1,6 +1,6 @@
-package com.mycab.booking.mapper;
+package com.mycab.common.mapper;
 
-import com.mycab.booking.config.DriverStatus;
+import com.mycab.common.util.DriverStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

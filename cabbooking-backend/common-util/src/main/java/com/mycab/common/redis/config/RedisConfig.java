@@ -1,4 +1,4 @@
-package com.mycab.booking.config;
+package com.mycab.common.redis.config;
 
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
